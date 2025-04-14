@@ -6,15 +6,19 @@ export default function MainPage() {
     const [mailValue, setMailValue] = useState<string>() // initial mail value is an empty string
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true) // initially the button should be disabled
     const [submitted, setSubmitted] = useState<boolean>(false)
+    const [pwdValue, setPwdValue] = useState<string>()
 
-    const onChangeMail = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setMailValue(event.target)
+    const onChangeMail = (event: React.ChangeEvent<HTMLInputElement>) => {             
+        setMailValue(event.target.textContent!)
+    }
+    const onChangePwd = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPwdValue(event.target.textContent!)
     }
     useEffect(() => {
-        if (mailValue != "") {
+        if (mailValue != "" && pwdValue != "") {
             setIsButtonDisabled(true)
         } else { setIsButtonDisabled(false) }
-    }, [mailValue]); // useEffect is a react function that executes everytime a value is changed, in this case we check every time mailValue changes
+    }, [mailValue, pwdValue]); // useEffect is a react function that executes everytime a value is changed, in this case we check every time mailValue changes
 
     return (
         <div
@@ -31,6 +35,11 @@ export default function MainPage() {
                 style={{ height: '30px', width: '300px', marginBottom: '50px' }}
                 onChange={onChangeMail}
                 helperText="email"
+            />
+            <TextField
+                style={{ height: '30px', width: '300px', marginBottom: '50px' }}
+                onChange={onChangePwd}
+                helperText="password"
             />
             <Button
                 variant='contained'
